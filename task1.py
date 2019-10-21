@@ -18,42 +18,44 @@ class Tree(object):
 #  1 2 +
 #     / \
 #    3   4
-t = Tree('*', [Tree('1'),
-               Tree('2'),
-               Tree('+', [Tree('3'),
-                          Tree('4')])])
 
-def calculate(t):
+
+root_node = Tree('*', [Tree('1'),
+                       Tree('2'),
+                       Tree('+', [Tree('3'),
+                                  Tree('4')])])
+
+def calculate(root_node):
     value = 0.0
-    if t.name == '+':
-        for i in range(len(t.children)):
-            value += check_value(t.children[i])
-    if t.name == '-':
-        value += check_value(t.children[0])
-        for i in range(1, len(t.children)):
-            value -= check_value(t.children[i])
-    if t.name == '*':
+    if root_node.name == '+':
+        for i in range(len(root_node.children)):
+            value += check_value(root_node.children[i])
+    if root_node.name == '-':
+        value += check_value(root_node.children[0])
+        for i in range(1, len(root_node.children)):
+            value -= check_value(root_node.children[i])
+    if root_node.name == '*':
         if value == 0:
-            value = check_value(t.children[0])
+            value = check_value(root_node.children[0])
         else:
-            value *= check_value(t.children[0])
-        for i in range(1, len(t.children)):
-            value *= check_value(t.children[i])
-    if t.name == '/':
+            value *= check_value(root_node.children[0])
+        for i in range(1, len(root_node.children)):
+            value *= check_value(root_node.children[i])
+    if root_node.name == '/':
         if value == 0:
-            value = check_value(t.children[0])
+            value = check_value(root_node.children[0])
         else:
-            value *= check_value(t.children[0])
-        for i in range(len(t.children)):
-            value /= check_value(t.children[i])
+            value *= check_value(root_node.children[0])
+        for i in range(len(root_node.children)):
+            value /= check_value(root_node.children[i])
 
-    print(value)
     return value
 
-def check_value(t):
-    if t.name in('+', '-', '*', '/'):
-        return calculate(t)
-    else:
-        return float(t.name)
 
-value = calculate(t)
+def check_value(root_node):
+    if root_node.name in('+', '-', '*', '/'):
+        return calculate(root_node)
+    else:
+        return float(root_node.name)
+
+value = calculate(root_node)
